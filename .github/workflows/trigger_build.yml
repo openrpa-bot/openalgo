@@ -2,9 +2,11 @@ name: Trigger Docker build in Repo C
 
 on:
   push:
-    branches: [ main ]        # or whichever branch you sync
-  tags:
-    - 'v*'                    # optional: triggers on version tags
+    branches:
+      - main        # trigger on main branch
+    tags:
+      - 'v*'        # optional: trigger on version tags
+  workflow_dispatch:  # optional manual trigger
 
 jobs:
   trigger:
