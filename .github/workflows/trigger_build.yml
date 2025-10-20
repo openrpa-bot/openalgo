@@ -1,0 +1,19 @@
+name: Trigger Docker build in Repo C
+
+on:
+  push:
+    branches: [ main ]        # or whichever branch you sync
+  tags:
+    - 'v*'                    # optional: triggers on version tags
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Repo C build via repository_dispatch
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.REPOC_DISPATCH_TOKEN }}" \
+            https://api.github.com/repos/openrpa-bot/openalgo-build/dispatches \
+            -d '{"event_type": "trigger-build", "client_payload": {"commit": "${{ github.sha }}"}}'
